@@ -5,4 +5,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 8001
-CMD ["node", "app/routes/index.js"]
+CMD ["node", "app/index.js"]
