@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: utec
+      POSTGRES_DB: ms-usuarios
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-network
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - ms-network
+
+  ms-usuario:
+    build: .
+    container_name: usuario-service
+    ports:
+      - "8001:8001"
+    depends_on:
+      - postgres
+    networks:
+      - ms-network
+
+volumes:
+  postgres-data:
+
+networks:
+  ms-network:
