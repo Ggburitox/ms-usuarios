@@ -1,11 +1,9 @@
 const { Pool } = require('pg');
-
 const pool = new Pool({
-    host: '172.31.84.224' #cambiar_por_ip_privada,
+    host: 'IP_DE_TU_NUEVA_MV_DB', // Aquí va la IP de la nueva MV
     port: 5432,
-    user: 'root',
-    password: 'usuarios1234',
-    database: 'ms-usuarios'
+    user: 'root',           // Debe coincidir con docker-compose
+    password: 'usuarios1234', // Debe coincidir con docker-compose
+    database: 'ms-usuarios'  // Debe coincidir con docker-compose
 });
-
 module.exports = pool;
