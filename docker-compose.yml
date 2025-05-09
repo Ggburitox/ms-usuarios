@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: utec
+      POSTGRES_PASSWORD: utec
+      POSTGRES_DB: users_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - cine_app
+
+  adminer:
+    image: adminer
+    container_name: adminer_ui
+    ports:
+      - "8080:8080"
+    networks:
+      - cine_app
+
+  user-ms:
+    build: .
+    container_name: user_microservice
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=utec
+      - DB_PASSWORD=utec
+      - DB_NAME=users_db
+      - PORT=8001
+    ports:
+      - "8001:8001"
+    depends_on:
+      - postgres
+    networks:
+      - cine_app
+
+volumes:
+  pgdata:
+
+networks:
+  cine_app:
